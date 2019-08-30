@@ -16,3 +16,15 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::group(['middleware' => 'api'], function () {
+    Route::group(['prefix' => 'auth'], function () {
+        $this->post('login', 'Auth\UserController@login');
+    });
+});
+
+Route::group(['middleware' => 'api'], function () {
+    Route::group(['prefix' => 'product'], function () {
+        $this->get('/', 'Api\UserController@index');
+    });
+});
+
