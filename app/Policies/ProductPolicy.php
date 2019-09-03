@@ -2,14 +2,20 @@
 
 namespace App\Policies;
 
-use App\User;
-use App\Product;
+use App\Models\User;
+use App\Models\Product;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ProductPolicy
 {
     use HandlesAuthorization;
 
+    public function before($user, $ability)
+    {
+        if ($user->isAdmin()) {
+            return true;
+        }
+    }
     /**
      * Determine whether the user can view the product.
      *
@@ -28,7 +34,7 @@ class ProductPolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function create(User $user)
+    public function create(User $user, Product $product)
     {
         //
     }
